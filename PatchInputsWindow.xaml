@@ -1,0 +1,29 @@
+<Window x:Class="ILPatchStudio.PatchInputsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ILPatchStudio"
+        Title="{local:LocalText Zh='传入原方法的变量', En='Pass variables from the original method'}"
+        Width="680" Height="510" MinWidth="500" MinHeight="320"
+        WindowStartupLocation="CenterOwner" Background="#F2F6FA" FontFamily="Segoe UI, Microsoft YaHei UI"
+        ShowInTaskbar="False">
+    <DockPanel Margin="14">
+        <TextBlock DockPanel.Dock="Top" TextWrapping="Wrap" Margin="0,0,0,8"
+                   Text="{local:LocalText Zh='勾选变量并选择传递方式。ref 修改原值，out 必须赋值，in 通过只读引用读取。按值、ref 和 in 都要求变量已初始化。局部槽位和原 out 参数的初始化状态需在注入点确认。', En='Select variables and choose how to pass each one. Ref edits the original, out must assign it, and in reads it through a readonly reference. Value, ref, and in require an initialized value. Verify local slots and original out parameters at the injection point.'}"/>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <Button Content="{local:LocalText Zh='应用', En='Apply'}" IsDefault="True" Click="OnApply" MinWidth="76" Margin="0,0,6,0"/>
+            <Button Content="{local:LocalText Zh='取消', En='Cancel'}" IsCancel="True" MinWidth="76"/>
+        </StackPanel>
+        <ListBox x:Name="Options" BorderBrush="{StaticResource LineBrush}" Background="White" ScrollViewer.HorizontalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel Margin="5,3" LastChildFill="True">
+                        <ComboBox DockPanel.Dock="Right" Width="90" ItemsSource="{Binding Modes}" DisplayMemberPath="Label"
+                                  SelectedValuePath="Mode" SelectedValue="{Binding Mode, Mode=TwoWay}" IsEnabled="{Binding IsChecked, ElementName=SelectedInput}"
+                                  AutomationProperties.Name="{local:LocalText Zh='传递方式', En='Passing mode'}" Margin="8,0,0,0"/>
+                        <CheckBox x:Name="SelectedInput" Content="{Binding Input.Label}" IsChecked="{Binding Checked, Mode=TwoWay}" VerticalAlignment="Center"/>
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Window>

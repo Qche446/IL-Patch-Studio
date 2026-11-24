@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>0.3.0</Version>
+    <AssemblyTitle>IL Patch Studio</AssemblyTitle>
+    <DebugType Condition="'$(Configuration)' == 'Release'">embedded</DebugType>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(IlSpyDirectory)' == ''">
+    <PackageReference Include="ICSharpCode.Decompiler" Version="[10.0.0.8330]" />
+    <PackageReference Include="Mono.Cecil" Version="[0.11.6]" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(IlSpyDirectory)' != ''">
+    <Reference Include="ICSharpCode.Decompiler" HintPath="$(IlSpyDirectory)/ICSharpCode.Decompiler.dll" />
+    <Reference Include="Mono.Cecil" HintPath="$(IlSpyDirectory)/Mono.Cecil.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="samples/**/*.cs;publish/**/*.cs;release/**/*.cs" />
+    <None Update="LICENSE;THIRD-PARTY-NOTICES.txt;README.md;README.zh-CN.md"
+          CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
